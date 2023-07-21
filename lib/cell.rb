@@ -29,9 +29,11 @@ class Cell
     end
   end
 
-  def render
-    if @fired_upon == false
-      '.'
+  def render(show = false)
+    if @fired_upon == false && show && @ship != nil
+      "S"
+    elsif @fired_upon == false
+      "."
     elsif @ship == nil
       "M"
     elsif @ship.sunk?

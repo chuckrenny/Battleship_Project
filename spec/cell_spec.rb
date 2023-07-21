@@ -60,6 +60,13 @@ RSpec.describe Cell do
       expect(cell_1.render).to eq(".")
     end
 
+    it 'can display ship location if desired' do
+      cell_1.place_ship(@cruiser)
+      expect(cell_1.render).to eq(".")
+      expect(cell_1.render(true)).to eq("S")
+      expect(cell_2.render(true)).to eq(".")
+    end
+
     it 'can display a missed shot' do
       cell_1.fire_upon
       expect(cell_1.render).to eq("M")
