@@ -79,7 +79,6 @@ RSpec.describe Cell do
       @cruiser.hit
       @cruiser.hit
       expect(cell_2.ship.health).to eq(1)
-
       cell_2.fire_upon
       expect(cell_2.ship.health).to eq(0)
       expect(@cruiser.sunk?).to eq(true)
