@@ -8,4 +8,7 @@ class Cell
     @empty = true
   end
 
+  def empty?
+    @empty
+  end
 end
