@@ -51,4 +51,18 @@ RSpec.describe Cell do
       expect(@cell.ship.health).to eq(2)
     end
   end
+
+  describe "#render" do
+    let(:cell_1)    {Cell.new("B4")}
+    let(:cell_2)    {Cell.new("C3")}
+
+    it 'can display the state of the cell' do
+      expect(cell_1.render).to eq(".")
+    end
+
+    it 'can display a missed shot' do
+      cell_1.fire_upon
+      expect(cell_1.render).to eq("M")
+    end
+  end
 end

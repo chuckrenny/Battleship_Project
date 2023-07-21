@@ -26,4 +26,12 @@ class Cell
     @fired_upon = true
     @ship.hit if @ship != nil
   end
+
+  def render
+    if @ship == nil
+      "M"
+    else
+      '.'
+    end
+  end
 end
