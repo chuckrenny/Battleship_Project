@@ -31,4 +31,24 @@ RSpec.describe Cell do
       expect(@cell.empty?).to eq(false)
     end
   end
+
+  describe "#fired_upon?" do
+    it 'defaults to false on creation' do
+      expect(@cell.fired_upon?).to eq(false)
+    end
+
+    it 'returns true after having been fired upon' do
+      @cell.fire_upon
+      expect(@cell.fired_upon?).to eq(true)
+    end
+  end
+
+  describe "#fire_upon" do
+    it 'reduces ship health when fired upon' do
+      @cell.place_ship(@cruiser)
+      expect(@cell.ship.health).to eq(3)
+      @cell.fire_upon
+      expect(@cell.ship.health).to eq(2)
+    end
+  end
 end
