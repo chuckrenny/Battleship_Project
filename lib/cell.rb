@@ -30,6 +30,9 @@ class Cell
   def render
     if @ship == nil
       "M"
+    elsif @ship != nil
+      
+      "H"
     else
       '.'
     end
