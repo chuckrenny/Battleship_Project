@@ -92,10 +92,12 @@ RSpec.describe Cell do
 
     it 'can display a sunk ship' do
       cell_2.place_ship(@cruiser)
+      expect(cell_2.ship.health).to eq(3)
 
       @cruiser.hit
       @cruiser.hit
       expect(cell_2.ship.health).to eq(1)
+
       cell_2.fire_upon
       expect(cell_2.ship.health).to eq(0)
       expect(@cruiser.sunk?).to eq(true)
