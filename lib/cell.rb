@@ -13,8 +13,8 @@ class Cell
     @empty
   end
 
-  def place_ship(input)
-    @ship = input
+  def place_ship(ship)
+    @ship = ship
     @empty = false
   end
 
