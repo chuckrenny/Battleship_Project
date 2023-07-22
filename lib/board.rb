@@ -60,7 +60,7 @@ class Board
     end
   end
 
-  def render
+  def render(player = false)
     nums = (1..4).to_a
     letts = ("A".."D").to_a
 
@@ -77,7 +77,7 @@ class Board
 
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
-        @cells[cell].render(true)
+        @cells[cell].render(player)
       end
 
       projection.push("#{letts[index]} " + new_row.join(" ") + " \n")

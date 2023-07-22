@@ -85,15 +85,52 @@ RSpec.describe Board do
   describe "#render" do
     it 'displays the board' do
       @board.place(@cruiser, ["A1", "A2", "A3"])
-
+      
+      board_projection = 
+      ("  1 2 3 4 \n" +
+      "A . . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
+      
+      expect(@board.render).to eq(board_projection)
+    end
+    
+    it 'displays a player version of the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
       board_projection = 
       ("  1 2 3 4 \n" +
       "A S S S . \n" +
       "B . . . . \n" +
       "C . . . . \n" +
       "D . . . . \n")
+    
+      expect(@board.render(true)).to eq(board_projection)
+    end
+    
+    it 'displays results of fired upon cells' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      @board.place(@submarine, ["C1", "D1"])
+      @board.cells["A1"].fire_upon
+      @board.cells["B4"].fire_upon
+      @board.cells["C1"].fire_upon
+      @board.cells["D1"].fire_upon
+      board_projection_1 = 
+      ("  1 2 3 4 \n" +
+      "A H . . . \n" +
+      "B . . . M \n" +
+      "C X . . . \n" +
+      "D X . . . \n")
+      
+      board_projection_2 = 
+      ("  1 2 3 4 \n" +
+      "A H S S . \n" +
+      "B . . . M \n" +
+      "C X . . . \n" +
+      "D X . . . \n")
 
-      expect(@board.render).to eq(board_projection)
+      expect(@board.render).to eq(board_projection_1)
+      expect(@board.render(true)).to eq(board_projection_2)
     end
   end
 end
