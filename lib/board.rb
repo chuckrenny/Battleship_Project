@@ -59,10 +59,15 @@ class Board
       end
     end
   end
-end
 
-#   "  1 2 3 4 \n" +
-# "A . . . . \n" +
-# "B . . . . \n" +
-# "C . . . . \n" +
-# "D . . . . \n"
+  def render
+    nums = (1..4).to_a
+    letts = ("A".."D").to_a
+
+    "  #{nums.join(" ")} \n" +
+    "A #{} . . . \n" +
+    "B . . . . \n" +
+    "C . . . . \n" +
+    "D . . . . \n"
+  end
+end

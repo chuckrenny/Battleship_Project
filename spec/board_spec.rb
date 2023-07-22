@@ -67,20 +67,36 @@ RSpec.describe Board do
       cell_1 = @board.cells["A1"]
       cell_2 = @board.cells["A2"]
       cell_3 = @board.cells["A3"]
-
+      
       expect(cell_1.ship).to eq(@cruiser)
       expect(cell_2.ship).to eq(@cruiser)
       expect(cell_3.ship).to eq(@cruiser)
-
+      
       expect(cell_3.ship).to eq(cell_2.ship)
       expect(cell_3.ship == cell_2.ship).to eq(true)
     end
-
+    
     it 'checks overlapping ship placements in the cells' do
       @board.place(@cruiser, ["A1", "A2", "A3"]) 
       expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
     end
   end
+  
+  describe "#render" do
+  it 'displays the board' do
+    @board.place(@cruiser, ["A1", "A2", "A3"])
+
+    board_projection = 
+    ("  1 2 3 4 \n" +
+    "A S S S . \n" +
+    "B . . . . \n" +
+    "C . . . . \n" +
+    "D . . . . \n")
+
+    expect(@board.render).to eq(board_projection)
+
+
+    end
 end
 
 # The board should be able to place a ship in its cells. 
