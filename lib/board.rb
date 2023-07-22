@@ -28,48 +28,27 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
       if coordinate_array.length == ship.length
-        if horizontal_placement(coordinate_array) || vertical_placement(coordinate_array)
+        if helper_placement(coordinate_array) 
           true
         else 
           false
         end
-        # if ("A1".."D4").each_cons(ship.length).find do |array|
-        #     coordinate_array == array
-        #     end
-        # end
-
       else
         false 
-      end
+      end 
     end
 
-  def horizontal_placement(coordinate_array)
+  def helper_placement(coordinate_array)
     # pull out all the numbers, need to be in increasing order
-    numbers = coordinate_array.map { |coordinate|
-      coordinate[1].to_i
-    } # [1, 2, 4]
-    # [1,2,3] == [3,2,1]
+    numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
 
     # pull out all the letters, need to be all the same
-    letters = coordinate_array.map { |coordinate| 
-      coordinate[0] 
-    } #['A', 'A', 'A']
+    letters = coordinate_array.map { |coordinate| coordinate[0] } 
 
-    # numbers are increasing order && letters all the|  same
-    letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a 
-    #another array of numbers but in consecutive order
-  end
-
-  def vertical_placement(coordinate_array)
-    numbers = coordinate_array.map { |coordinate|
-      coordinate[1].to_i
-    }
-
-    letters = coordinate_array.map { |coordinate| 
-      coordinate[0] 
-    }
-    # numbers are all the same && letters are in consecutive increasing order
-    numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each}
+    # horizontal: numbers are increasing order && letters all the same
+    (letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
+    # vertical: numbers are all the same && letters are in consecutive increasing order
+    (numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each})
   end
 end
 

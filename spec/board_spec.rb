@@ -41,6 +41,23 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@submarine, ["A1", "C1"])).to eq(false)
       expect(@board.valid_placement?(@submarine, ["C1", "B1"])).to eq(false)
     end
-  end
 
+    it 'determines diagonal coordinates are invalid' do
+      expect(@board.valid_placement?(@cruiser, ["A1", "B2", "C3"])).to eq(false)
+      expect(@board.valid_placement?(@submarine, ["C2", "D3"])).to eq(false)
+    end
+
+    it 'verifies valid placements' do
+      expect(@board.valid_placement?(@submarine, ["A1", "A2"])).to eq(true)
+      expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
+    end
+  end
+  
+  describe "#helper_placement" do
+    it 'is the helper method for #valid_placement?' do
+      expect(@board.helper_placement(["A1", "A2", "A22"])).to be_a(FalseClass)
+      expect(@board.helper_placement(["A1", "A2", "A3"])).to eq(true)
+      expect(@board.helper_placement(["A1", "B1"])).to eq(true)
+    end
+  end
 end
