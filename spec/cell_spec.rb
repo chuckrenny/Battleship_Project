@@ -57,6 +57,7 @@ RSpec.describe Cell do
       expect(@cell.ship.health).to eq(2)
 
       expect(@cell.fire_upon).to eq("Already fired upon this cell.")
+      expect(@cell.ship.health).to eq(2)
     end
   end
 
