@@ -65,16 +65,31 @@ class Board
     letts = ("A".."D").to_a
 
 
-    "  #{nums.join(" ")} \n" +
-    "#{cells.each do |cell|
-    string = []
-    if cell[0] == letts[0]
-      string << cell.join
+    board = [
+      ["A1", "A2", "A3", "A4"],
+      ["B1", "B2", "B3", "B4"],
+      ["C1", "C2", "C3", "C4"],
+      ["D1", "D2", "D3", "D4"]
+    ]
+
+    # final projection
+    projection = ["  #{nums.join(" ")} \n"]
+
+    board.each_with_index do |row, index|
+      new_row = row.map do |cell|
+        @cells[cell].render(true)
+      end
+
+      projection.push("#{letts[index]} " + new_row.join(" ") + " \n")
     end
-    string.join(" ")
-  end}" +
-  "B . . . . \n" +
-  "C . . . . \n" +
-  "D . . . . \n"
-end
+
+    projection.join("")
+    # [
+    #   ["  #{nums.join(" ")} \n"],
+    #   ["#{letts[index]} " + row.join(" ") + " \n"],
+    #   ["#{letts[index]} " + row.join(" ") + " \n"],
+    #   ["#{letts[index]} " + row.join(" ") + " \n"],
+    #   ["#{letts[index]} " + row.join(" ") + " \n"]
+    # ]
+  end
 end
