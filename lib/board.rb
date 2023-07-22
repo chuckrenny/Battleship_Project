@@ -68,9 +68,8 @@ class Board
     letters = coordinate_array.map { |coordinate| 
       coordinate[0] 
     }
-
     # numbers are all the same && letters are in consecutive increasing order
-    numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).find {|each| letters == each}
+    numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each}
   end
 end
 
