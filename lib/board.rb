@@ -64,10 +64,17 @@ class Board
     nums = (1..4).to_a
     letts = ("A".."D").to_a
 
+
     "  #{nums.join(" ")} \n" +
-    "A #{} . . . \n" +
-    "B . . . . \n" +
-    "C . . . . \n" +
-    "D . . . . \n"
-  end
+    "#{cells.each do |cell|
+    string = []
+    if cell[0] == letts[0]
+      string << cell.join
+    end
+    string.join(" ")
+  end}" +
+  "B . . . . \n" +
+  "C . . . . \n" +
+  "D . . . . \n"
+end
 end

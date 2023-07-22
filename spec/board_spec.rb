@@ -83,20 +83,19 @@ RSpec.describe Board do
   end
   
   describe "#render" do
-  it 'displays the board' do
-    @board.place(@cruiser, ["A1", "A2", "A3"])
+    it 'displays the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
 
-    board_projection = 
-    ("  1 2 3 4 \n" +
-    "A S S S . \n" +
-    "B . . . . \n" +
-    "C . . . . \n" +
-    "D . . . . \n")
+      board_projection = 
+      ("  1 2 3 4 \n" +
+      "A S S S . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
 
-    expect(@board.render).to eq(board_projection)
-
-
+      expect(@board.render).to eq(board_projection)
     end
+  end
 end
 
 # The board should be able to place a ship in its cells. 
