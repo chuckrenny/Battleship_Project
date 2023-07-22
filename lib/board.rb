@@ -28,7 +28,8 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
       if coordinate_array.length == ship.length
-        if helper_placement(coordinate_array) 
+        if helper_placement(coordinate_array) && 
+        coordinate_array.all? {|cell| @cells[cell].empty?}
           true
         else 
           false
@@ -49,6 +50,14 @@ class Board
     (letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
     # vertical: numbers are all the same && letters are in consecutive increasing order
     (numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each})
+  end
+
+  def place(ship, coordinate_array)
+    if valid_placement?(ship, coordinate_array)
+      coordinate_array.each do |cell|
+        @cells[cell].place_ship(ship) 
+      end
+    end
   end
 end
 
