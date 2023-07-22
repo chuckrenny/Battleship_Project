@@ -50,6 +50,12 @@ class Board
     # vertical: numbers are all the same && letters are in consecutive increasing order
     (numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each})
   end
+
+  def place(ship, coordinate_array)
+    coordinate_array.each do |cell|
+      @cells[cell].ship = ship
+    end
+  end
 end
 
 #   "  1 2 3 4 \n" +

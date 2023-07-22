@@ -60,4 +60,24 @@ RSpec.describe Board do
       expect(@board.helper_placement(["A1", "B1"])).to eq(true)
     end
   end
+
+  describe "#place" do
+    it 'can place a ship on the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])    
+      cell_1 = @board.cells["A1"]
+      cell_2 = @board.cells["A2"]
+      cell_3 = @board.cells["A3"]
+
+      expect(cell_1.ship).to eq(@cruiser)
+      expect(cell_2.ship).to eq(@cruiser)
+      expect(cell_3.ship).to eq(@cruiser)
+
+      expect(cell_3.ship).to eq(cell_2.ship)
+      expect(cell_3.ship == cell_2.ship).to eq(true)
+    end
+  end
 end
+
+# The board should be able to place a ship in its cells. 
+# Because a Ship occupies more than one cell, multiple Cells 
+# will contain the same ship.
