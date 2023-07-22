@@ -4,7 +4,6 @@ class Ship
               :health,
               :sunk
 
-
   def initialize(name, length)
     @name = name
     @length = length
@@ -17,8 +16,8 @@ class Ship
   end
 
   def hit
+    @health -= 1 if !@sunk
     @sunk = true if @health == 0
-    @health -= 1 if !sunk?
   end
 
 end
