@@ -50,6 +50,14 @@ RSpec.describe Cell do
       @cell.fire_upon
       expect(@cell.ship.health).to eq(2)
     end
+
+    it 'can only fire upon a cell once' do
+      @cell.place_ship(@cruiser)
+      @cell.fire_upon
+      expect(@cell.ship.health).to eq(2)
+
+      expect(@cell.fire_upon).to eq("Already fired upon this cell.")
+    end
   end
 
   describe "#render" do
