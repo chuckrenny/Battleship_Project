@@ -61,31 +61,34 @@ class Board
   end
 
   def render(player = false)
+    # The # x # size of the board
     board_size = 4
+    # Creates an array for all letters
     alphabet = ("A".."Z").to_a
+    # Creates the numbers array that will bereferenced later. Dynamic based on board size.
     nums = (1..board_size).to_a
+    # Creates the letters array that will be referenced later. Dynamic as well.
     letts = ("A"..alphabet[board_size - 1]).to_a
-    places = letts.product(nums)
+    # Creates arrays of every combo of nums and letts. 
+    places = letts.product(nums) 
 
     board = 
+    # Starting a game array which will hold the rows of the board
       game = []
+      # For each letter create a row array
       letts.map do |lett|
         row = []
+        # Once looking at a single letter, look at the places array for every matching letter.
         places.each do |place|
+          # When the first element matches letter, join it with it's number and shovel into row.
           if place[0] == lett
             row << place.join
           end
         end
+        # Once all of a certain letter has been placed into a row, shovel that into game.
         game << row
       end
       game
-    
-    # [
-    #   ["A1", "A2", "A3", "A4"],
-    #   ["B1", "B2", "B3", "B4"],
-    #   ["C1", "C2", "C3", "C4"],
-    #   ["D1", "D2", "D3", "D4"]
-    # ]
 
     # final projection
     projection = ["  #{nums.join(" ")} \n"]
@@ -98,12 +101,5 @@ class Board
     end
 
     projection.join("")
-    # [
-    #   ["  #{nums.join(" ")} \n"],
-    #   ["#{letts[index]} " + row.join(" ") + " \n"],
-    #   ["#{letts[index]} " + row.join(" ") + " \n"],
-    #   ["#{letts[index]} " + row.join(" ") + " \n"],
-    #   ["#{letts[index]} " + row.join(" ") + " \n"]
-    # ]
   end
 end

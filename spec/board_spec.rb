@@ -98,6 +98,7 @@ RSpec.describe Board do
     
     it 'displays a player version of the board' do
       @board.place(@cruiser, ["A1", "A2", "A3"])
+
       board_projection = 
       ("  1 2 3 4 \n" +
       "A S S S . \n" +
@@ -111,10 +112,12 @@ RSpec.describe Board do
     it 'displays results of fired upon cells' do
       @board.place(@cruiser, ["A1", "A2", "A3"])
       @board.place(@submarine, ["C1", "D1"])
+
       @board.cells["A1"].fire_upon
       @board.cells["B4"].fire_upon
       @board.cells["C1"].fire_upon
       @board.cells["D1"].fire_upon
+      
       board_projection_1 = 
       ("  1 2 3 4 \n" +
       "A H . . . \n" +
