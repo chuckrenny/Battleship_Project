@@ -28,7 +28,7 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
       if coordinate_array.length == ship.length
-        if helper_placement(coordinate_array) 
+        if horizontal_placement(coordinate_array) || vertical_placement(coordinate_array)
           true
         else 
           false
@@ -43,17 +43,25 @@ class Board
     numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
 
     # pull out all the letters, need to be all the same
-    letters = coordinate_array.map { |coordinate| coordinate[0] } 
+    letters = coordinate_array.map { |coordinate| 
+      coordinate[0] 
+    } #['A', 'A', 'A']
 
-    # horizontal: numbers are increasing order && letters all the same
-    (letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
-    # vertical: numbers are all the same && letters are in consecutive increasing order
-    (numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each})
+    # numbers are increasing order && letters all the|  same
+    letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a 
+    #another array of numbers but in consecutive order
+  end
+
+  def vertical_placement(coordinate_array)
+    numbers = coordinate_array.map { |coordinate|
+      coordinate[1].to_i
+    }
+
+    letters = coordinate_array.map { |coordinate| 
+      coordinate[0] 
+    }
+
+    # numbers are all the same && letters are in consecutive increasing order
+    numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).find {|each| letters == each}
   end
 end
-
-#   "  1 2 3 4 \n" +
-# "A . . . . \n" +
-# "B . . . . \n" +
-# "C . . . . \n" +
-# "D . . . . \n"

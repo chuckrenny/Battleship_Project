@@ -52,7 +52,7 @@ RSpec.describe Board do
       expect(@board.valid_placement?(@cruiser, ["B1", "C1", "D1"])).to eq(true)
     end
   end
-
+  
   describe "#helper_placement" do
     it 'is the helper method for #valid_placement?' do
       expect(@board.helper_placement(["A1", "A2", "A22"])).to be_a(FalseClass)
@@ -60,4 +60,84 @@ RSpec.describe Board do
       expect(@board.helper_placement(["A1", "B1"])).to eq(true)
     end
   end
+
+  describe "#place" do
+    it 'can place a ship on the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])    
+      cell_1 = @board.cells["A1"]
+      cell_2 = @board.cells["A2"]
+      cell_3 = @board.cells["A3"]
+      
+      expect(cell_1.ship).to eq(@cruiser)
+      expect(cell_2.ship).to eq(@cruiser)
+      expect(cell_3.ship).to eq(@cruiser)
+      
+      expect(cell_3.ship).to eq(cell_2.ship)
+      expect(cell_3.ship == cell_2.ship).to eq(true)
+    end
+    
+    it 'checks overlapping ship placements in the cells' do
+      @board.place(@cruiser, ["A1", "A2", "A3"]) 
+      expect(@board.valid_placement?(@submarine, ["A1", "B1"])).to eq(false)
+    end
+  end
+  
+  describe "#render" do
+    it 'displays the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      
+      board_projection = 
+      ("  1 2 3 4 \n" +
+      "A . . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
+      
+      expect(@board.render).to eq(board_projection)
+    end
+    
+    it 'displays a player version of the board' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+
+      board_projection = 
+      ("  1 2 3 4 \n" +
+      "A S S S . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
+    
+      expect(@board.render(true)).to eq(board_projection)
+    end
+    
+    it 'displays results of fired upon cells' do
+      @board.place(@cruiser, ["A1", "A2", "A3"])
+      @board.place(@submarine, ["C1", "D1"])
+
+      @board.cells["A1"].fire_upon
+      @board.cells["B4"].fire_upon
+      @board.cells["C1"].fire_upon
+      @board.cells["D1"].fire_upon
+      
+      board_projection_1 = 
+      ("  1 2 3 4 \n" +
+      "A H . . . \n" +
+      "B . . . M \n" +
+      "C X . . . \n" +
+      "D X . . . \n")
+      
+      board_projection_2 = 
+      ("  1 2 3 4 \n" +
+      "A H S S . \n" +
+      "B . . . M \n" +
+      "C X . . . \n" +
+      "D X . . . \n")
+
+      expect(@board.render).to eq(board_projection_1)
+      expect(@board.render(true)).to eq(board_projection_2)
+    end
+  end
 end
+
+# The board should be able to place a ship in its cells. 
+# Because a Ship occupies more than one cell, multiple Cells 
+# will contain the same ship.
