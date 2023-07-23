@@ -16,5 +16,13 @@ RSpec.describe Setup do
     end
   end
 
+  describe "#computer_placement" do
+    it 'will place cruiser and submarine ships on to the board' do
+      @start.computer_placement
+
+      array_cell_object = @start.computer.cells.values
+      expect(array_cell_object.any? { |cell| !cell.empty?}).to eq(true)
+    end
+  end
 
 end

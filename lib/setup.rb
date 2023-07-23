@@ -45,7 +45,13 @@ class Setup
 
     random_placement_submarine = all_submarines.sample
 
-    @computer.place(cruiser, random_placement_cruiser)
-    @computer.place(submarine, random_placement_submarine)
+    @computer.place(cruiser, random_placement_cruiser) + @computer.place(submarine, random_placement_submarine)
+  end
+
+  def player_placement(ship, coordinate_string)
+    # 'A1 A2 A3'
+    coordinate_array = coordinate_string.gsub(',', '').split(" ")
+
+    @player.place(ship, coordinate_array)
   end
 end

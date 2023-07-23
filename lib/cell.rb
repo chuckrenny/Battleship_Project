@@ -26,7 +26,7 @@ class Cell
     if @fired_upon == false 
       @fired_upon = true
       @ship.hit if @ship != nil
-    elsif @fired_upon = true
+    elsif @fired_upon == true
       "Already fired upon this cell."
     end
   end
