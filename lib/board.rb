@@ -61,20 +61,34 @@ class Board
   end
 
   def render(player = false)
-    nums = (1..4).to_a
-    letts = ("A".."D").to_a
+    board_size = 4
+    alphabet = ("A".."Z").to_a
+    nums = (1..board_size).to_a
+    letts = ("A"..alphabet[board_size - 1]).to_a
+    places = letts.product(nums)
 
-
-    board = [
-      ["A1", "A2", "A3", "A4"],
-      ["B1", "B2", "B3", "B4"],
-      ["C1", "C2", "C3", "C4"],
-      ["D1", "D2", "D3", "D4"]
-    ]
+    board = 
+      game = []
+      letts.map do |lett|
+        row = []
+        places.each do |place|
+          if place[0] == lett
+            row << place.join
+          end
+        end
+        game << row
+      end
+      game
+    
+    # [
+    #   ["A1", "A2", "A3", "A4"],
+    #   ["B1", "B2", "B3", "B4"],
+    #   ["C1", "C2", "C3", "C4"],
+    #   ["D1", "D2", "D3", "D4"]
+    # ]
 
     # final projection
     projection = ["  #{nums.join(" ")} \n"]
-
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
         @cells[cell].render(player)
