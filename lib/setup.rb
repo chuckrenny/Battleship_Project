@@ -6,9 +6,7 @@ class Setup
     @player = Board.new
   end
 
-  def computer_placement
-    cruiser = Ship.new("Cruiser", 3)
-    submarine = Ship.new("Submarine", 2)
+  def computer_placement(ship)
     cruiser_horizontal = [
       ["A1", "A2", "A3"], ["A2", "A3", "A4"],
       ["B1", "B2", "B3"], ["B2", "B3", "B4"],
@@ -25,7 +23,7 @@ class Setup
 
     all_cruisers = cruiser_horizontal + cruiser_vertical 
 
-    random_placement_cruiser = all_cruisers.sample
+    # random_placement_cruiser = all_cruisers.sample
 
     submarine_horizontal = [
       ["A1", "A2"], ["A2", "A3"], ["A3", "A4"],
@@ -43,9 +41,17 @@ class Setup
 
     all_submarines = submarine_horizontal + submarine_vertical 
 
-    random_placement_submarine = all_submarines.sample
-
-    @computer.place(cruiser, random_placement_cruiser) + @computer.place(submarine, random_placement_submarine)
+    # random_placement_submarine = all_submarines.sample
+    # require 'pry';binding.pry
+    if ship.length == 3
+      while(@computer.place(ship, all_cruisers.sample) == false)
+        @computer.place(ship, all_cruisers.sample)
+      end
+    elsif ship.length == 2
+      while(@computer.place(ship, all_submarines.sample) == false)
+        @computer.place(ship, all_submarines.sample)
+      end
+    end
   end
 
   def player_placement(ship, coordinate_string)
