@@ -43,15 +43,19 @@ class Setup
 
     # random_placement_submarine = all_submarines.sample
     # require 'pry';binding.pry
-    if ship.length == 3
-      while(@computer.place(ship, all_cruisers.sample) == false)
-        @computer.place(ship, all_cruisers.sample)
-      end
-    elsif ship.length == 2
-      while(@computer.place(ship, all_submarines.sample) == false)
-        @computer.place(ship, all_submarines.sample)
-      end
-    end
+    # if ship.length == 3
+    #   while(@computer.place(ship, all_cruisers.sample) == false)
+    #     @computer.place(ship, all_cruisers.sample)
+    #   end
+    # elsif ship.length == 2
+    #   while(@computer.place(ship, all_submarines.sample) == false)
+    #     @computer.place(ship, all_submarines.sample)
+    #   end
+    # end
+    good_coordinates = @computer.cells.keys.combination(ship.length).to_a.find_all do |coordinates|
+                         @computer.helper_placement(coordinates)
+                       end
+    @computer.place(ship, good_coordinates.sample)
   end
 
   def player_placement(ship, coordinate_string)

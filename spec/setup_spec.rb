@@ -18,7 +18,8 @@ RSpec.describe Setup do
 
   describe "#computer_placement" do
     it 'will place cruiser and submarine ships on to the board' do
-      @start.computer_placement
+      cruiser = Ship.new("Cruiser", 3)
+      @start.computer_placement(cruiser)
 
       array_cell_object = @start.computer.cells.values
       expect(array_cell_object.any? { |cell| !cell.empty?}).to eq(true)
