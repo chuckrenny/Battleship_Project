@@ -15,7 +15,7 @@ elsif input == "p"
   submarine = Ship.new("Submarine", 2)
   setup.computer_placement(cruiser)
   setup.computer_placement(submarine)
-  
+
   puts setup.computer.render(true)
   puts "I have laid out my ships on the grid. \n" +
         "You now need to lay out your ships \n" +
@@ -43,5 +43,7 @@ elsif input == "p"
     submarine1_placement = gets.chomp
   end
   puts setup.player.render(true)
-
+  
+  setup.run
+  
 end
