@@ -40,7 +40,7 @@ class Setup
     sample_computer_shot = player.cells.keys.sample
 
     while computer.cells[sample_computer_shot].fired_upon? == true
-      sample_computer_shot = player.cells.values.sample
+      sample_computer_shot = player.cells.keys.sample
     end
     player.cells[sample_computer_shot].fire_upon
 
@@ -49,7 +49,7 @@ class Setup
     elsif computer.cells[player_shot].render == 'H'
       puts "Your shot on #{computer.cells[player_shot].coordinate} was a miss-guided HIT!"
     elsif computer.cells[player_shot].render == 'X'
-      puts "Your shot on #{computer.cells[player_shot].coordinate} sunk my #{computer.cells[player_shot].ship}"
+      puts "Your shot on #{computer.cells[player_shot].coordinate} sunk my #{computer.cells[player_shot].ship.name}"
     end
 
     if player.cells[sample_computer_shot].render == 'M' 
@@ -57,14 +57,14 @@ class Setup
     elsif player.cells[sample_computer_shot].render == 'H'
       puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a HIT!"
     elsif player.cells[sample_computer_shot].render == 'X'
-      puts "My shot on #{player.cells[sample_computer_shot].coordinate} sunk your #{player.cells[sample_computer_shot].ship}"
+      puts "My shot on #{player.cells[sample_computer_shot].coordinate} sunk your #{player.cells[sample_computer_shot].ship.name}"
     end
 
     computer_ships = computer.cells.find_all { |cell, cell_object| !cell_object.empty? }
     player_ships = player.cells.find_all { |cell, cell_object| !cell_object.empty? }
-      
+    # require 'pry';binding.pry
     if (computer_ships.any? { |cell| cell[1].ship.sunk == false } && player_ships.any? {|cell| cell[1].ship.sunk == false})
-      puts turn
+      run
     elsif computer_ships.any? {|cell| cell[1].ship.sunk == false} == false 
       puts "Player Won!"
     else
