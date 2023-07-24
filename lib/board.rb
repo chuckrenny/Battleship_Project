@@ -57,6 +57,8 @@ class Board
       coordinate_array.each do |cell|
         @cells[cell].place_ship(ship) 
       end
+    else
+      false
     end
   end
 
