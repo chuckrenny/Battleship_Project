@@ -26,4 +26,36 @@ RSpec.describe Setup do
     end
   end
 
+  describe "#turn" do
+    before(:each) do
+      @cruiser = Ship.new("Cruiser", 3)
+      @submarine = Ship.new("Submarine", 2)
+      @start.computer_placement(@cruiser)
+      @start.computer_placement(@submarine)
+      @start.player_placement(@cruiser, "A1, A2, A3")
+      @start.player_placement(@submarine, "B1, C1")
+      # @start.turn
+    end
+
+    it 'will display the boards of both sides' do
+      board_projection_computer = 
+      ("  1 2 3 4 \n" +
+      "A . . . . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
+
+      board_projection_player = 
+      ("  1 2 3 4 \n" +
+      "A S S S . \n" +
+      "B S . . . \n" +
+      "C S . . . \n" +
+      "D . . . . \n")
+      
+      expect(@start.computer.render).to eq(board_projection_computer)
+      expect(@start.player.render(true)).to eq(board_projection_player)
+    end
+
+    
+  end
 end

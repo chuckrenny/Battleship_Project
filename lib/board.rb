@@ -28,8 +28,7 @@ class Board
 
     def valid_placement?(ship, coordinate_array)
       if coordinate_array.length == ship.length
-        if helper_placement(coordinate_array) && 
-        coordinate_array.all? {|cell| @cells[cell].empty?}
+        if helper_placement(coordinate_array) && coordinate_array.all? {|cell| @cells[cell].empty?}
           true
         else 
           false
