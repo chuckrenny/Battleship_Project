@@ -38,8 +38,7 @@ class Setup
 
     computer.cells[player_shot].fire_upon
     sample_computer_shot = player.cells.keys.sample
-
-    while computer.cells[sample_computer_shot].fired_upon? == true
+    while player.cells[sample_computer_shot].fired_upon? == true
       sample_computer_shot = player.cells.keys.sample
     end
     player.cells[sample_computer_shot].fire_upon
