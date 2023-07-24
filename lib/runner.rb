@@ -6,7 +6,7 @@ input = gets.chomp
 
 if input == "q"
   puts "See you later!"
-  
+
 elsif input == "p"
   puts "Let's Play!"
   setup = Setup.new
@@ -16,5 +16,7 @@ elsif input == "p"
         "The Cruiser is three units long and the Submarine is two unit long"
   puts setup.player.render
   puts " Enter the squares for the Cruiser (3 spaces):"
+  #new start
+  cruiser_placement = gets.chomp
   
 end
