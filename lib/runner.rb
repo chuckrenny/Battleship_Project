@@ -15,7 +15,7 @@ elsif input == "p"
   submarine = Ship.new("Submarine", 2)
   setup.computer_placement(cruiser)
   setup.computer_placement(submarine)
-  
+  require 'pry'; binding.pry
   puts setup.computer.render(true)
   puts "I have laid out my ships on the grid. \n" +
         "You now need to lay out your ships \n" +
