@@ -38,7 +38,6 @@ class Setup
   # end
 
   def main_menu
-
     loop do
       puts "Welcome to BATTLESHIP!" 
       puts "Enter p to play. Enter q to quit."
