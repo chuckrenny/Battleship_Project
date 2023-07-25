@@ -22,17 +22,17 @@ class Board
      }
     end
 
-    def valid_coordinate?(coordinate)
-      @cells.keys.include?(coordinate)
-    end
+  def valid_coordinate?(coordinate)
+    @cells.keys.include?(coordinate)
+  end
 
-    def valid_placement?(ship, coordinate_array)
-      if coordinate_array.length == ship.length
-        helper_placement(coordinate_array) && coordinate_array.all? {|cell| @cells[cell].empty?}
-      else
-        false 
-      end 
-    end
+  def valid_placement?(ship, coordinate_array)
+    if coordinate_array.length == ship.length
+      helper_placement(coordinate_array) && coordinate_array.all? {|cell| @cells[cell].empty?}
+    else
+      false 
+    end 
+  end
 
   def helper_placement(coordinate_array)
     numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 

@@ -34,7 +34,6 @@ RSpec.describe Setup do
       @start.computer_placement(@submarine)
       @start.player_placement(@cruiser, "A1, A2, A3")
       @start.player_placement(@submarine, "B1, C1")
-      # @start.turn
     end
 
     it 'will display the boards of both sides' do
@@ -56,6 +55,6 @@ RSpec.describe Setup do
       expect(@start.player.render(true)).to eq(board_projection_player)
     end
 
-    
+
   end
 end

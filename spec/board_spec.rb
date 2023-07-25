@@ -137,7 +137,3 @@ RSpec.describe Board do
     end
   end
 end
-
-# The board should be able to place a ship in its cells. 
-# Because a Ship occupies more than one cell, multiple Cells 
-# will contain the same ship.
