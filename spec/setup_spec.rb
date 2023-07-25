@@ -3,6 +3,8 @@ require 'spec_helper'
 RSpec.describe Setup do
   before(:each) do
     @start = Setup.new
+    @cruiser = Ship.new("Cruiser", 3)
+    @submarine = Ship.new("Submarine", 2)
   end
 
   describe "#initialize" do
@@ -26,10 +28,22 @@ RSpec.describe Setup do
     end
   end
 
+  describe "#player_placement" do
+    it 'places a ship on the player board' do
+      @start.player_placement(@cruiser, "A1 A2 A3")
+      board_projection_player = 
+      ("  1 2 3 4 \n" +
+      "A S S S . \n" +
+      "B . . . . \n" +
+      "C . . . . \n" +
+      "D . . . . \n")
+
+      expect(@start.player.render(true)).to eq(board_projection_player)
+    end
+  end
+
   describe "#turn" do
     before(:each) do
-      @cruiser = Ship.new("Cruiser", 3)
-      @submarine = Ship.new("Submarine", 2)
       @start.computer_placement(@cruiser)
       @start.computer_placement(@submarine)
       @start.player_placement(@cruiser, "A1, A2, A3")
@@ -54,7 +68,5 @@ RSpec.describe Setup do
       expect(@start.computer.render).to eq(board_projection_computer)
       expect(@start.player.render(true)).to eq(board_projection_player)
     end
-
-
   end
 end
