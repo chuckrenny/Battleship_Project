@@ -38,6 +38,7 @@ class Setup
   # end
 
   def main_menu
+
     loop do
       puts "Welcome to BATTLESHIP!" 
       puts "Enter p to play. Enter q to quit."
@@ -47,6 +48,8 @@ class Setup
         begin_game
       elsif input == "q"
         puts "See you later!"
+
+        # added, prevents any further code from running
         exit(0)
       else
         puts "Invalid input, please try again."
