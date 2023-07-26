@@ -8,6 +8,8 @@ class Setup
     @computer = Board.new
     @player = Board.new
     @game_over = false
+    @player_ships = []
+    @computer_ships = []
   end
 
   def computer_placement(ship)
@@ -30,6 +32,12 @@ class Setup
     @computer.create_board(length, width)
     @player.create_board(length, width)
   end
+
+  def ship_creation(name, length)
+    @player_ships << Ship.new(name, length)
+    @computer_ships << Ship.new(name, length)
+  end
+
  
   def main_menu
     loop do
@@ -88,53 +96,78 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
   end 
 
   def begin_game
-      puts "Let's Play!"
-      puts "Would you like to select a board size?  y/n"
-      board = gets.chomp
-      if board == "y"
-        puts "How long should the board be?
-        Input any letter between D and Z."
-        length = gets.chomp.capitalize
-        puts "How wide should the board be?
-        Input any number between 4 and 26."
-        width = gets.chomp.to_i
-        board_selection(length, width)
+    puts "Let's Play!"
+    puts "Would you like to select a board size?  y/n"
+    board = gets.chomp.downcase
+    while board != "n" && board != "y"
+      puts "Invlaid input, try again."
+      board = gets.chomp.downcase
+    end
+    if board == "y"
+      puts "How long should the board be?
+      Input any letter between D and Z."
+      length = gets.chomp.capitalize
+      puts "How wide should the board be?
+      Input any number between 4 and 26."
+      width = gets.chomp.to_i
+      board_selection(length, width)
+    end
+    puts "Would you like to create your own ship? y/n
+    Please note: If you choose this route, we will both only play with the ships you made."
+    make = gets.chomp.downcase
+    while make != "n" && make != "y"
+      puts "Invalid input, try again."
+      make = gets.chomp.downcase
+    end
+    if make == "y"
+      loop do 
+        puts "Please name your ship."
+        name = gets.chomp
+        puts "How long will the ship be?"
+        health = gets.chomp.to_i
+        ship_creation(name, health)
+        puts "Would you like to make another? y/n"
+        more = gets.chomp.downcase
+        while more != "y" && more != "n"
+          puts "Invalid input, try again."
+          more = gets.chomp.downcase
+        end
+        if more == "n"
+          break
+        end
       end
-  
-      cruiser = Ship.new("Cruiser", 3)
-      submarine = Ship.new("Submarine", 2)
-      player_cruiser = Ship.new("Cruiser", 3)
-      player_submarine = Ship.new("Submarine", 2)
-      computer_placement(cruiser)
-      computer_placement(submarine)
+    else
+      @computer_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+      @player_ships = [Ship.new("Cruiser", 3), Ship.new("Submarine", 2)]
+    end
+
+    @computer_ships.each { |ship| computer_placement(ship) }
     
-      puts @computer.render
-      puts "I have laid out my ships on the grid. \n" +
-            "You now need to lay out your ships \n" +
-            "The Cruiser is three units long and the Submarine is two unit long"
-      puts @player.render(true)
-      puts " Enter the squares for the Cruiser (3 spaces):  \n" +
-           " Example: A1, A2, A3"
-      cruiser_placement = gets.chomp
-    
-      while(player_placement(player_cruiser, cruiser_placement) == false)
-        puts "Those are invalid cruiser coordinates. Please try again:"
-        cruiser_placement = gets.chomp
+    puts @computer.render(true)
+    puts "I have laid out my ships on the grid. \n" +
+      "You now need to lay out your ships \n" +
+      if make != "y"
+        "The Cruiser is three units long and the Submarine is two unit long"
+      else
+        "Lets place what you created"
       end
-      
+    count = 0  
+    loop do
       puts @player.render(true)
-    
-      puts " Enter the squares for the Submarine (2 spaces):  \n" +
-           " Example: B1, C1"
-      submarine_placement = gets.chomp
-    
-      while(player_placement(player_submarine, submarine_placement) == false)
-        puts "Those are invalid submarine coordinates. Please try again:"
-        submarine_placement = gets.chomp
+      puts " Enter the squares for the #{@player_ships[count].name} (#{@player_ships[count].length} spaces):  \n" +
+        " Example: #{(@player.cells.keys[0]..@player.cells.keys[@player_ships[count].length - 1]).to_a.join(" ")}"
+      placement = gets.chomp
+      while(player_placement(@player_ships[count], placement) == false)
+        puts "Those are invalid coordinates. Please try again:"
+        placement = gets.chomp
       end
-      puts @player.render(true)
-      
-      run
+      if count >= (@player_ships.count - 1)
+        break
+      end
+      count += 1
+    end
+    puts @player.render(true)
+    run
   end
 
   def display
