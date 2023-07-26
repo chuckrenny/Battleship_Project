@@ -13,11 +13,7 @@ class Setup
   end
 
   def computer_placement(ship)
-    # good_coordinates = @computer.cells.keys.combination(ship.length).to_a.find_all do |coordinates|
-    #                      @computer.helper_placement(coordinates)
-                      #  end
     head_location = @computer.cells.find_all { |cell| cell[1].empty? }.sample[0]
-    # places = @computer.letters.product(@computer.numbers)
     possible_placements = [[head_location], [head_location]]
     count = 0
     (ship.length - 1).times do
@@ -43,7 +39,6 @@ class Setup
 
   def player_placement(ship, coordinate_string)
     coordinate_array = coordinate_string.gsub(',', '').split(" ")
-
     @player.place(ship, coordinate_array)
   end
 
@@ -103,7 +98,12 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       puts "Enter p to play. Enter q to quit."
       input = gets.chomp
       if input == "p"
+        @computer = Board.new
+        @player = Board.new
         @game_over = false
+        @player_ships = []
+        @computer_ships = []
+        @intelligent_shot = []
         begin_game
       elsif input == "q"
         puts "See you later!"
@@ -175,7 +175,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
     loop do
       puts @player.render(true)
       puts " Enter the squares for the #{@player_ships[count].name} (#{@player_ships[count].length} spaces):  \n" +
-        " Example: #{(@player.cells.keys[0]..@player.cells.keys[@player_ships[count].length - 1]).to_a.join(" ")}"
+        " Example: #{@player.cells.keys.first(@player_ships[count].length).join(" ")}"
       placement = gets.chomp
       while(player_placement(@player_ships[count], placement) == false)
         puts "Those are invalid coordinates. Please try again:"
@@ -209,10 +209,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       end
       computer.cells[player_shot].fire_upon
 
-      #initial random computer shot 
       sample_computer_shot = player.cells.keys.sample 
-
-      # if intelligent_shot array is not empty, sample shot will be the first intelligent array value
       sample_computer_shot = intelligent_shot.shift if !intelligent_shot.empty?  
       
       while player.cells[sample_computer_shot].fired_upon? 
@@ -233,8 +230,6 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a miss."
       elsif player.cells[sample_computer_shot].render == 'H'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a HIT!"
-        # added
-        # select for adjacent shots that have not been fired_upon
         intelligent_shot.concat(player.adjacent_cells(sample_computer_shot))
       elsif player.cells[sample_computer_shot].render == 'X'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} sunk your #{player.cells[sample_computer_shot].ship.name}"

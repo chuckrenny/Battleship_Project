@@ -43,9 +43,9 @@ class Board
       false 
     end 
   end
-# Moved the empty check from line 41 to line 52 so that it lives in the helper_placement
+
   def helper_placement(coordinate_array)
-    numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
+    numbers = coordinate_array.map { |coordinate| coordinate[1..-1].to_i} 
     letters = coordinate_array.map { |coordinate| coordinate[0] } 
     ((letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
     (numbers.uniq.length == 1 && ("A"..@letters.last).each_cons(coordinate_array.count).any? {|each| letters == each})) &&
@@ -78,10 +78,21 @@ class Board
       end
       game
 
-    projection = ["  #{@numbers.join(" ")} \n"]
+    projection = ["  " + @numbers.map { |n| 
+        if n.to_s.length < 2 
+          " #{n}"
+        else 
+          n.to_s 
+        end
+        }.join(" ") + " \n"]
+
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
-        @cells[cell].render(player)
+        cell_content = @cells[cell].render(player)
+        if cell_content.length < 2 
+            cell_content = " " + cell_content
+        end
+        cell_content
       end
       projection.push("#{@letters[index]} " + new_row.join(" ") + " \n")
     end
@@ -93,7 +104,8 @@ class Board
     numbers = (1..@cells.keys.last[1].to_i).to_a
 
     # split key into letter and number component 'A' '1'
-    letter, number = cell.split("")
+    letter = cell[0]
+    number = cell[1..-1]
 
     # find the indices of the letter and number in their respective arrays
     letter_index = letters.index(letter)
@@ -103,10 +115,18 @@ class Board
     adjacent_keys = []
 
     # input key if it does not wrap
-    adjacent_keys << [letter, numbers[number_index - 1]].join if number_index - 1 >= 0 # left cell
-    adjacent_keys << [letter, numbers[number_index + 1]].join if number_index + 1 < numbers.length # right cell
-    adjacent_keys << [letters[letter_index - 1], number].join if letter_index - 1 >= 0 # upper cell
-    adjacent_keys << [letters[letter_index + 1], number].join if letter_index + 1 < letters.length # lower cell
+    if number_index - 1 >= 0
+      adjacent_keys << [letter, numbers[number_index - 1]].join  # left cell
+    end
+    if number_index + 1 < numbers.length
+      adjacent_keys << [letter, numbers[number_index + 1]].join  # right cell
+    end
+    if letter_index - 1 >= 0
+      adjacent_keys << [letters[letter_index - 1], number].join  # upper cell
+    end
+    if letter_index + 1 < letters.length
+    adjacent_keys << [letters[letter_index + 1], number].join  # lower cell
+    end
 
     # returns array for all keys included in the board that have not been fired_upon
     adjacent_keys.select { |key| valid_coordinate?(key) && !@cells[key].fired_upon?}

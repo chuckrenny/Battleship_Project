@@ -4,7 +4,7 @@ We initially developed methods directly in the runner script to quickly prototyp
 Now that we understand the structure of a game, we might have begun with the class and methods in our game file instead of the runner file.
 
 2. If you had one more day to work on this project, what would you work on?
-
+We would break up the #begin and #run methods in Game class as those are fairly extensive. We can also look to implement a smoother and more UI friendly game interface. 
 
 3. Describe the pairing techniques you used while working on this project.
 
