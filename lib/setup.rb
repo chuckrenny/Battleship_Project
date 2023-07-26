@@ -91,7 +91,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       computer_placement(cruiser)
       computer_placement(submarine)
     
-      puts @computer.render(true)
+      puts @computer.render
       puts "I have laid out my ships on the grid. \n" +
             "You now need to lay out your ships \n" +
             "The Cruiser is three units long and the Submarine is two unit long"
@@ -122,7 +122,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
 
   def display
     puts "=============COMPUTER BOARD============="
-    puts @computer.render(true) 
+    puts @computer.render
     puts "==============PLAYER BOARD=============="
     puts@player.render(true)
   end
