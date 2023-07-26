@@ -103,7 +103,12 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       puts "Enter p to play. Enter q to quit."
       input = gets.chomp
       if input == "p"
+        @computer = Board.new
+        @player = Board.new
         @game_over = false
+        @player_ships = []
+        @computer_ships = []
+        @intelligent_shot = []
         begin_game
       elsif input == "q"
         puts "See you later!"
