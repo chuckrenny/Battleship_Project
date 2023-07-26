@@ -97,7 +97,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
         length = gets.chomp.capitalize
         puts "How wide should the board be?
         Input any number between 4 and 26."
-        width = gets.chomp
+        width = gets.chomp.to_i
         board_selection(length, width)
       end
   
