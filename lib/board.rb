@@ -48,7 +48,7 @@ class Board
     numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
     letters = coordinate_array.map { |coordinate| coordinate[0] } 
     (letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
-    (numbers.uniq.length == 1 && ("A".."D").each_cons(coordinate_array.count).any? {|each| letters == each})
+    (numbers.uniq.length == 1 && ("A"..@letters.last).each_cons(coordinate_array.count).any? {|each| letters == each})
   end
 
   def place(ship, coordinate_array)
