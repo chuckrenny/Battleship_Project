@@ -78,10 +78,31 @@ class Board
       end
       game
 
-    projection = ["  #{@numbers.join(" ")} \n"]
+    # projection = ["  #{@numbers.join(" ")} \n"]
+    projection = ["  " + @numbers.map { |n| 
+        if n.to_s.length < 2 
+          " #{n}"
+        else 
+          n.to_s 
+        end
+        }.join(" ") + " \n"]
+
+        
+    # board.each_with_index do |row, index|
+    #   new_row = row.map do |cell|
+    #     @cells[cell].render(player)
+    #   end
+    #   projection.push("#{@letters[index]} " + new_row.join(" ") + " \n")
+    # end
+    # projection.join("")
+
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
-        @cells[cell].render(player)
+        cell_content = @cells[cell].render(player)
+        if cell_content.length < 2 
+            cell_content = " " + cell_content
+        end
+        cell_content
       end
       projection.push("#{@letters[index]} " + new_row.join(" ") + " \n")
     end
