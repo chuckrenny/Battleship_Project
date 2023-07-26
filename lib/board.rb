@@ -45,7 +45,7 @@ class Board
   end
 # Moved the empty check from line 41 to line 52 so that it lives in the helper_placement
   def helper_placement(coordinate_array)
-    numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
+    numbers = coordinate_array.map { |coordinate| coordinate[1..-1].to_i} 
     letters = coordinate_array.map { |coordinate| coordinate[0] } 
     ((letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
     (numbers.uniq.length == 1 && ("A"..@letters.last).each_cons(coordinate_array.count).any? {|each| letters == each})) &&
