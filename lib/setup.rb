@@ -13,11 +13,30 @@ class Setup
   end
 
   def computer_placement(ship)
-    good_coordinates = @computer.cells.keys.combination(ship.length).to_a.find_all do |coordinates|
-                         @computer.helper_placement(coordinates)
-                       end
-
-    if @computer.place(ship, good_coordinates.sample) == false
+    # good_coordinates = @computer.cells.keys.combination(ship.length).to_a.find_all do |coordinates|
+    #                      @computer.helper_placement(coordinates)
+                      #  end
+    head_location = @computer.cells.find_all { |cell| cell[1].empty? }.sample[0]
+    # places = @computer.letters.product(@computer.numbers)
+    possible_placements = [[head_location], [head_location]]
+    count = 0
+    (ship.length - 1).times do
+      if possible_placements[0][count] != nil
+        letter_1, number_1 = possible_placements[0][count].split("")
+        number_index_1 = @computer.numbers.index(number_1.to_i)
+        possible_placements[0] << [letter_1, @computer.numbers[number_index_1 + 1]].join if number_index_1 + 1 < @computer.numbers.length
+      end
+      if possible_placements[1][count] != nil
+        letter_2, number_2 = possible_placements[1][count].split("")
+        letter_index_2 = @computer.letters.index(letter_2)
+        possible_placements[1]  << [@computer.letters[letter_index_2 + 1], number_2].join if letter_index_2 + 1 < @computer.letters.length
+      end
+      count += 1
+    end
+    good_coordinates = possible_placements.find_all { |coordinates| @computer.valid_placement?(ship, coordinates) }
+    if !good_coordinates.empty?
+      @computer.place(ship, good_coordinates.sample)
+    else
       computer_placement(ship)
     end
   end
