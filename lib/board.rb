@@ -20,7 +20,16 @@ class Board
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4")
      }
-    end
+  end
+
+  def create_board(length, width)
+    alphabet = ("A".."Z").to_a
+    nums = (1..width).to_a
+    letts = ("A"..alphabet[length - 1]).to_a
+    places = letts.product(nums)
+    tiles = places.each_with_object({}) {|cell, hash| hash[cell.join] = Cell.new(cell.join)}
+    @cells = tiles
+  end
 
   def valid_coordinate?(coordinate)
     @cells.keys.include?(coordinate)
