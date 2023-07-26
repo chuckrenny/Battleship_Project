@@ -1,8 +1,7 @@
 require './spec/spec_helper'
 
 class Setup
-    attr_reader :computer, :player
-    # attr_accessor :game_over
+    attr_reader :computer, :player, :intelligent_shot
 
   def initialize
     @computer = Board.new
@@ -10,6 +9,7 @@ class Setup
     @game_over = false
     @player_ships = []
     @computer_ships = []
+    @intelligent_shot = []
   end
 
   def computer_placement(ship)
@@ -152,6 +152,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
         "Lets place what you created"
       end
     count = 0  
+
     loop do
       puts @player.render(true)
       puts " Enter the squares for the #{@player_ships[count].name} (#{@player_ships[count].length} spaces):  \n" +
@@ -183,17 +184,23 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       puts "Enter a valid coordinate for your shot:"
       player_shot = gets.chomp
 
-      while (!computer.valid_coordinate?(player_shot) || computer.cells[player_shot].fired_upon? == true)
+      while (!computer.valid_coordinate?(player_shot) || computer.cells[player_shot].fired_upon?)
         puts "Not a valid coordinate. Please try again"
         player_shot = gets.chomp
       end
-
       computer.cells[player_shot].fire_upon
-      sample_computer_shot = player.cells.keys.sample
+
+      #initial random computer shot 
+      sample_computer_shot = player.cells.keys.sample 
+
+      # if intelligent_shot array is not empty, sample shot will be the first intelligent array value
+      sample_computer_shot = intelligent_shot.shift if !intelligent_shot.empty?  
+      
       while player.cells[sample_computer_shot].fired_upon? 
         sample_computer_shot = player.cells.keys.sample
       end
-      player.cells[sample_computer_shot].fire_upon
+
+      player.cells[sample_computer_shot].fire_upon  
 
       if computer.cells[player_shot].render == 'M' 
         puts "Your shot on #{computer.cells[player_shot].coordinate} was a miss."
@@ -207,6 +214,9 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a miss."
       elsif player.cells[sample_computer_shot].render == 'H'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a HIT!"
+        # added
+        # select for adjacent shots that have not been fired_upon
+        intelligent_shot.concat(player.adjacent_cells(sample_computer_shot))
       elsif player.cells[sample_computer_shot].render == 'X'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} sunk your #{player.cells[sample_computer_shot].ship.name}"
       end

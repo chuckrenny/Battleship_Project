@@ -86,4 +86,28 @@ class Board
     end
     projection.join("")
   end
+
+  def adjacent_cells(cell)
+    letters = ("A"..@cells.keys.last[0]).to_a
+    numbers = (1..@cells.keys.last[1].to_i).to_a
+
+    # split key into letter and number component 'A' '1'
+    letter, number = cell.split("")
+
+    # find the indices of the letter and number in their respective arrays
+    letter_index = letters.index(letter)
+    number_index = numbers.index(number.to_i)
+
+    # calculate the keys for adjacent cells
+    adjacent_keys = []
+
+    # input key if it does not wrap
+    adjacent_keys << [letter, numbers[number_index - 1]].join if number_index - 1 >= 0 # left cell
+    adjacent_keys << [letter, numbers[number_index + 1]].join if number_index + 1 < numbers.length # right cell
+    adjacent_keys << [letters[letter_index - 1], number].join if letter_index - 1 >= 0 # upper cell
+    adjacent_keys << [letters[letter_index + 1], number].join if letter_index + 1 < letters.length # lower cell
+
+    # returns array for all keys included in the board that have not been fired_upon
+    adjacent_keys.select { |key| valid_coordinate?(key) && !@cells[key].fired_upon?}
+  end
 end
