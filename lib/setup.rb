@@ -209,10 +209,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       end
       computer.cells[player_shot].fire_upon
 
-      #initial random computer shot 
       sample_computer_shot = player.cells.keys.sample 
-
-      # if intelligent_shot array is not empty, sample shot will be the first intelligent array value
       sample_computer_shot = intelligent_shot.shift if !intelligent_shot.empty?  
       
       while player.cells[sample_computer_shot].fired_upon? 
@@ -233,8 +230,6 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a miss."
       elsif player.cells[sample_computer_shot].render == 'H'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} was a HIT!"
-        # added
-        # select for adjacent shots that have not been fired_upon
         intelligent_shot.concat(player.adjacent_cells(sample_computer_shot))
       elsif player.cells[sample_computer_shot].render == 'X'
         puts "My shot on #{player.cells[sample_computer_shot].coordinate} sunk your #{player.cells[sample_computer_shot].ship.name}"

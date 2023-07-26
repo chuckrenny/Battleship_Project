@@ -78,7 +78,6 @@ class Board
       end
       game
 
-    # projection = ["  #{@numbers.join(" ")} \n"]
     projection = ["  " + @numbers.map { |n| 
         if n.to_s.length < 2 
           " #{n}"
@@ -86,15 +85,6 @@ class Board
           n.to_s 
         end
         }.join(" ") + " \n"]
-
-        
-    # board.each_with_index do |row, index|
-    #   new_row = row.map do |cell|
-    #     @cells[cell].render(player)
-    #   end
-    #   projection.push("#{@letters[index]} " + new_row.join(" ") + " \n")
-    # end
-    # projection.join("")
 
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
@@ -124,10 +114,18 @@ class Board
     adjacent_keys = []
 
     # input key if it does not wrap
-    adjacent_keys << [letter, numbers[number_index - 1]].join if number_index - 1 >= 0 # left cell
-    adjacent_keys << [letter, numbers[number_index + 1]].join if number_index + 1 < numbers.length # right cell
-    adjacent_keys << [letters[letter_index - 1], number].join if letter_index - 1 >= 0 # upper cell
-    adjacent_keys << [letters[letter_index + 1], number].join if letter_index + 1 < letters.length # lower cell
+    if number_index - 1 >= 0
+      adjacent_keys << [letter, numbers[number_index - 1]].join  # left cell
+    end
+    if number_index + 1 < numbers.length
+      adjacent_keys << [letter, numbers[number_index + 1]].join  # right cell
+    end
+    if letter_index - 1 >= 0
+      adjacent_keys << [letters[letter_index - 1], number].join  # upper cell
+    end
+    if letter_index + 1 < letters.length
+    adjacent_keys << [letters[letter_index + 1], number].join  # lower cell
+    end
 
     # returns array for all keys included in the board that have not been fired_upon
     adjacent_keys.select { |key| valid_coordinate?(key) && !@cells[key].fired_upon?}
