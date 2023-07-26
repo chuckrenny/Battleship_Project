@@ -104,7 +104,8 @@ class Board
     numbers = (1..@cells.keys.last[1].to_i).to_a
 
     # split key into letter and number component 'A' '1'
-    letter, number = cell.split("")
+    letter = cell[0]
+    number = cell[1..-1]
 
     # find the indices of the letter and number in their respective arrays
     letter_index = letters.index(letter)
