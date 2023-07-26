@@ -1,5 +1,5 @@
 class Board
-  attr_reader :cells
+  attr_reader :cells, :numbers, :letters
 
   def initialize
     @cells = {
@@ -38,17 +38,18 @@ class Board
 
   def valid_placement?(ship, coordinate_array)
     if coordinate_array.length == ship.length
-      helper_placement(coordinate_array) && coordinate_array.all? {|cell| @cells[cell].empty?}
+      helper_placement(coordinate_array)
     else
       false 
     end 
   end
-
+# Moved the empty check from line 41 to line 52 so that it lives in the helper_placement
   def helper_placement(coordinate_array)
     numbers = coordinate_array.map { |coordinate| coordinate[1].to_i} 
     letters = coordinate_array.map { |coordinate| coordinate[0] } 
-    (letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
-    (numbers.uniq.length == 1 && ("A"..@letters.last).each_cons(coordinate_array.count).any? {|each| letters == each})
+    ((letters.uniq.length == 1 && numbers == (numbers.first..numbers.last).to_a) || 
+    (numbers.uniq.length == 1 && ("A"..@letters.last).each_cons(coordinate_array.count).any? {|each| letters == each})) &&
+    coordinate_array.all? {|cell| @cells[cell].empty?}
   end
 
   def place(ship, coordinate_array)
