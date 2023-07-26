@@ -25,6 +25,11 @@ class Setup
 
     @player.place(ship, coordinate_array)
   end
+
+  def board_selection(length, width)
+    @computer.create_board(length, width)
+    @player.create_board(length, width)
+  end
  
   def main_menu
     loop do
@@ -84,6 +89,18 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
 
   def begin_game
       puts "Let's Play!"
+      puts "Would you like to select a board size?  y/n"
+      board = gets.chomp
+      if board == "y"
+        puts "How long should the board be?
+        Input any letter between D and Z."
+        length = gets.chomp.capitalize
+        puts "How wide should the board be?
+        Input any number between 4 and 26."
+        width = gets.chomp.to_i
+        board_selection(length, width)
+      end
+  
       cruiser = Ship.new("Cruiser", 3)
       submarine = Ship.new("Submarine", 2)
       player_cruiser = Ship.new("Cruiser", 3)

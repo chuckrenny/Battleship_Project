@@ -20,7 +20,17 @@ class Board
       "D3" => Cell.new("D3"),
       "D4" => Cell.new("D4")
      }
-    end
+     @numbers = (1..4).to_a
+     @letters = ("A".."D").to_a
+  end
+
+  def create_board(length, width)
+    @numbers = (1..width).to_a
+    @letters = ("A"..length).to_a
+    places = @letters.product(@numbers)
+    tiles = places.each_with_object({}) {|cell, hash| hash[cell.join] = Cell.new(cell.join)}
+    @cells = tiles
+  end
 
   def valid_coordinate?(coordinate)
     @cells.keys.include?(coordinate)
@@ -52,15 +62,11 @@ class Board
   end
 
   def render(player = false)
-    board_size = 4
-    alphabet = ("A".."Z").to_a
-    nums = (1..board_size).to_a
-    letts = ("A"..alphabet[board_size - 1]).to_a
-    places = letts.product(nums) 
+    places = @letters.product(@numbers) 
 
     board = 
       game = []
-      letts.map do |lett|
+      @letters.map do |lett|
         row = []
         places.each do |place|
           if place[0] == lett
@@ -71,12 +77,12 @@ class Board
       end
       game
 
-    projection = ["  #{nums.join(" ")} \n"]
+    projection = ["  #{@numbers.join(" ")} \n"]
     board.each_with_index do |row, index|
       new_row = row.map do |cell|
         @cells[cell].render(player)
       end
-      projection.push("#{letts[index]} " + new_row.join(" ") + " \n")
+      projection.push("#{@letters[index]} " + new_row.join(" ") + " \n")
     end
     projection.join("")
   end
