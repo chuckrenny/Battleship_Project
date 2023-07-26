@@ -175,7 +175,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
     loop do
       puts @player.render(true)
       puts " Enter the squares for the #{@player_ships[count].name} (#{@player_ships[count].length} spaces):  \n" +
-        " Example: #{(@player.cells.keys[0]..@player.cells.keys[@player_ships[count].length - 1]).to_a.join(" ")}"
+        " Example: #{@player.cells.keys.first(@player_ships[count].length).join(" ")}"
       placement = gets.chomp
       while(player_placement(@player_ships[count], placement) == false)
         puts "Those are invalid coordinates. Please try again:"
