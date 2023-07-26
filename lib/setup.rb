@@ -13,11 +13,7 @@ class Setup
   end
 
   def computer_placement(ship)
-    # good_coordinates = @computer.cells.keys.combination(ship.length).to_a.find_all do |coordinates|
-    #                      @computer.helper_placement(coordinates)
-                      #  end
     head_location = @computer.cells.find_all { |cell| cell[1].empty? }.sample[0]
-    # places = @computer.letters.product(@computer.numbers)
     possible_placements = [[head_location], [head_location]]
     count = 0
     (ship.length - 1).times do
