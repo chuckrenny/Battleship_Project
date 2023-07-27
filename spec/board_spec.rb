@@ -87,11 +87,11 @@ RSpec.describe Board do
       @board.place(@cruiser, ["A1", "A2", "A3"])
       
       board_projection = 
-      ("  1 2 3 4 \n" +
-      "A . . . . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  .  .  .  . \n" +
+      "B  .  .  .  . \n" +
+      "C  .  .  .  . \n" +
+      "D  .  .  .  . \n")
       
       expect(@board.render).to eq(board_projection)
     end
@@ -100,11 +100,11 @@ RSpec.describe Board do
       @board.place(@cruiser, ["A1", "A2", "A3"])
 
       board_projection = 
-      ("  1 2 3 4 \n" +
-      "A S S S . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  S  S  S  . \n" +
+      "B  .  .  .  . \n" +
+      "C  .  .  .  . \n" +
+      "D  .  .  .  . \n")
     
       expect(@board.render(true)).to eq(board_projection)
     end
@@ -119,18 +119,18 @@ RSpec.describe Board do
       @board.cells["D1"].fire_upon
       
       board_projection_1 = 
-      ("  1 2 3 4 \n" +
-      "A H . . . \n" +
-      "B . . . M \n" +
-      "C X . . . \n" +
-      "D X . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  H  .  .  . \n" +
+      "B  .  .  .  M \n" +
+      "C  X  .  .  . \n" +
+      "D  X  .  .  . \n")
       
       board_projection_2 = 
-      ("  1 2 3 4 \n" +
-      "A H S S . \n" +
-      "B . . . M \n" +
-      "C X . . . \n" +
-      "D X . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  H  S  S  . \n" +
+      "B  .  .  .  M \n" +
+      "C  X  .  .  . \n" +
+      "D  X  .  .  . \n")
 
       expect(@board.render).to eq(board_projection_1)
       expect(@board.render(true)).to eq(board_projection_2)

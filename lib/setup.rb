@@ -162,7 +162,7 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
 
     @computer_ships.each { |ship| computer_placement(ship) }
     
-    puts @computer.render(true)
+    puts @computer.render
     puts "I have laid out my ships on the grid. \n" +
       "You now need to lay out your ships \n" +
       if make != "y"
@@ -176,10 +176,10 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
       puts @player.render(true)
       puts " Enter the squares for the #{@player_ships[count].name} (#{@player_ships[count].length} spaces):  \n" +
         " Example: #{@player.cells.keys.first(@player_ships[count].length).join(" ")}"
-      placement = gets.chomp
+      placement = gets.chomp.upcase
       while(player_placement(@player_ships[count], placement) == false)
         puts "Those are invalid coordinates. Please try again:"
-        placement = gets.chomp
+        placement = gets.chomp.upcase
       end
       if count >= (@player_ships.count - 1)
         break
@@ -201,11 +201,11 @@ puts "_________/\\\\\\\\\\\\\\\\\\\\\\\\\\_______/\\\\\\\\\\\\\\\\\\_____/\\\\\\
     while !@game_over
       display
       puts "Enter a valid coordinate for your shot:"
-      player_shot = gets.chomp
+      player_shot = gets.chomp.upcase
 
       while (!computer.valid_coordinate?(player_shot) || computer.cells[player_shot].fired_upon?)
         puts "Not a valid coordinate. Please try again"
-        player_shot = gets.chomp
+        player_shot = gets.chomp.upcase
       end
       computer.cells[player_shot].fire_upon
 

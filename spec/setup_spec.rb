@@ -32,11 +32,11 @@ RSpec.describe Setup do
     it 'places a ship on the player board' do
       @start.player_placement(@cruiser, "A1 A2 A3")
       board_projection_player = 
-      ("  1 2 3 4 \n" +
-      "A S S S . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  S  S  S  . \n" +
+      "B  .  .  .  . \n" +
+      "C  .  .  .  . \n" +
+      "D  .  .  .  . \n")
 
       expect(@start.player.render(true)).to eq(board_projection_player)
     end
@@ -52,18 +52,18 @@ RSpec.describe Setup do
 
     it 'will display the boards of both sides' do
       board_projection_computer = 
-      ("  1 2 3 4 \n" +
-      "A . . . . \n" +
-      "B . . . . \n" +
-      "C . . . . \n" +
-      "D . . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  .  .  .  . \n" +
+      "B  .  .  .  . \n" +
+      "C  .  .  .  . \n" +
+      "D  .  .  .  . \n")
 
       board_projection_player = 
-      ("  1 2 3 4 \n" +
-      "A S S S . \n" +
-      "B S . . . \n" +
-      "C S . . . \n" +
-      "D . . . . \n")
+      ("   1  2  3  4 \n" +
+      "A  S  S  S  . \n" +
+      "B  S  .  .  . \n" +
+      "C  S  .  .  . \n" +
+      "D  .  .  .  . \n")
       
       expect(@start.computer.render).to eq(board_projection_computer)
       expect(@start.player.render(true)).to eq(board_projection_player)
